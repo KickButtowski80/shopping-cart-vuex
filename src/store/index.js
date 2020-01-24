@@ -3,7 +3,7 @@ import Vue from 'vue'
 import shop from '../api/shop'
 
 Vue.use(Vuex)
-
+Vue.config.devtools = true
 const store = new Vuex.Store({
     state: { // data
         products: [],
