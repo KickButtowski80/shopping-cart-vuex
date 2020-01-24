@@ -3,7 +3,7 @@ import Vue from 'vue'
 
 Vue.use(Vuex)
 
-new Vuex.Store({
+const store = new Vuex.Store({
     state: { // data
         products: []
     },
@@ -15,13 +15,19 @@ new Vuex.Store({
     actions: { // methods
         fetchProducts() {
             // make api call to fetch the products
+            // run setProducts mutation
+            // never update the state which is mutations responsibility 
         }
     },
 
-    mutations: { // setting and updating the state
-        setProducts() {
+    mutations: { // setting and updating the single state
+        //products is playload
+        setProducts(state, products) {
             //update products which is the state 
+            state.products = products
         }
     }
 
 })
+
+export default store;
