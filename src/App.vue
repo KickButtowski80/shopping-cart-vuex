@@ -3,8 +3,14 @@
     <v-container >
       <v-row>
         <v-col><h1>Cart Total So far: </h1>
-                <v-btn color= "success"
-                      >{{cartTotal | currency}}</v-btn></v-col>
+          <v-btn color= "success"
+                >{{cartTotal | currency}}
+          </v-btn>
+          <v-btn  color='warning'                
+          v-on:click="checkout">Checkout
+          </v-btn> 
+          <span>{{this.$store.state.checkoutStatus}}</span>                     
+        </v-col>
       </v-row>
       <v-row> 
         
@@ -35,6 +41,9 @@ export default {
     
         cartTotal(){
             return this.$store.getters.cartTotal
+        },
+          checkout(){ 
+            return this.$store.dispatch('checkout')
         }
   }
 };

@@ -7,7 +7,8 @@ let store = new Vuex.Store({
     state: { // data
         products: [],
         // hold obj { id , quantity }
-        cart:[]
+        cart: [],
+        checkoutStatus: null
     },
     getters: { // computed properties
         availableProducts(state) {
@@ -76,6 +77,19 @@ let store = new Vuex.Store({
                 alert("no inventory for " + product.title)
                  
             }
+        },
+        checkout(context) {
+            shop.buyProducts(
+                context.state.cart,
+                () => {
+                    context.commit('emptyCart')
+                    context.commit('setCheckoutStatus', 'success')
+                },
+                () => {
+                    context.commit('setCheckoutStatus', 'failure')
+                }
+            )
+            
         }
     },
     // responsible for state changes
@@ -97,7 +111,14 @@ let store = new Vuex.Store({
         },
         decrementProductInventory(state, product) {
             product.inventory--
+        },
+        emptyCart(state) {
+            state.cart = []
+        },
+        setCheckoutStatus(state, status) {
+            state.checkoutStatus = status
         }
+
     }
 
 })

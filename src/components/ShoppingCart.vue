@@ -18,12 +18,12 @@
                     <div>
                        {{cartItem.price}}
                     </div>
-                    </v-card-text>
-               
+                    </v-card-text>               
                 </v-card>
            
            </li>
        </ul>
+    
     </div>
 </template>
 
@@ -38,13 +38,13 @@ export default {
         
     },
     computed:{
-        cartItems(){
-            
+        cartItems(){            
             return this.$store.state.cart
         },
         findProudcts(){
             return this.$store.getters.cartProducts
-        }
+        },
+     
     }
     
 }
