@@ -6,7 +6,9 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: { // data
-        products: []
+        products: [],
+        // hold obj { id , quantity }
+        cart:[]
     },
     getters: { // computed properties
         availableProducts(state) {
@@ -38,7 +40,22 @@ const store = new Vuex.Store({
         //     } else {
                 // show message for the out of the stock time 
         //     }
-        // }
+        // },
+        addProductToCart(context, product) {
+            if (product.inventory > 0) {
+                // item exist
+                const cartItem = context.state.cart.find(item => item.id === product.id)
+                if (!cartItem) {
+                    //product be pushed to cart
+                    context.commit('pushProductToCart', product.id)
+                } else {
+                    //inc item quantity
+                    context.commit('incrementItemQuantity', cartItem)
+                }
+
+                context.commit('decrementProductInventory', product)
+            }
+        }
     },
     // responsible for state changes
     // never change the state directly in an action 
@@ -47,6 +64,18 @@ const store = new Vuex.Store({
         setProducts(state, products) {
             //update products which is the state 
             state.products = products
+        },
+        pushProductToCart(state, productId) {
+            state.cart.push({
+                id: productId,
+                quantity: 1
+            })
+        },
+        incrementItemQuantity(state, cartItem) {
+            cartItem.quantity++
+        },
+        decrementProductInventory(state, product) {
+            product.quantity--
         }
     }
 

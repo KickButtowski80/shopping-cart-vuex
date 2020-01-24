@@ -9,6 +9,7 @@
             <li v-for="product in products"
                 v-bind:key = "product.name">
             {{product.title}}  -- {{product.price}}
+            <button on-click="addProductToCart(product)"> Add To Cart </button>
             </li>
         </ul>
     
@@ -29,6 +30,13 @@ export default {
             return this.$store.getters.availableProducts
         }
     }, 
+
+    methods: {
+        addProductToCart(product){
+            this.$store.dispatch('addProductToCart', product)
+        }
+    },
+
     created(){
         this.loading = true
         // trigger action in store 
