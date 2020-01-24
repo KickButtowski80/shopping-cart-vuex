@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import store from '../store/index'
 export default {
     data(){
         return{
@@ -26,13 +25,15 @@ export default {
     },
     computed:{
         products(){
-            return store.getters.availableProducts
+            // repalce store with this.$store cuz it is global
+            return this.$store.getters.availableProducts
         }
     }, 
     created(){
         this.loading = true
         // trigger action in store 
-          store.dispatch('fetchProducts')  
+          // repalce store with this.$store cuz it is global
+          this.$store.dispatch('fetchProducts')  
               .then(() => this.loading = false)
     }    
 }
