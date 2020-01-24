@@ -8,8 +8,8 @@
             <h1>Product List</h1>
             <li v-for="product in products"
                 v-bind:key = "product.name">
-            {{product.title}}  -- {{product.price}} -- {{product.inventory}}
-            <v-btn color="primary" on-click="addProductToCart(product)"> Add To Cart </v-btn>
+            {{product.title}}  -- {{product.price  | currency}} -- {{product.inventory}}
+            <v-btn color="primary" v-on:click="addProductToCart(product)"> Add To Cart </v-btn>
             </li>
         </ul>
     

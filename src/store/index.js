@@ -3,8 +3,7 @@ import Vue from 'vue'
 import shop from '../api/shop'
 
 Vue.use(Vuex)
-Vue.config.devtools = true
-const store = new Vuex.Store({
+let store = new Vuex.Store({
     state: { // data
         products: [],
         // hold obj { id , quantity }
@@ -12,8 +11,27 @@ const store = new Vuex.Store({
     },
     getters: { // computed properties
         availableProducts(state) {
-            return state.products           
-        }        
+            return state.products.filter( product => product.inventory > 0 )           
+        },
+        cartProducts(state) {
+            return state.cart.map(cartItem => {
+                const product = state.products.find(
+                    product => product.id === cartItem.id
+                )
+                return {
+                        title: product.title,
+                        price: product.price,
+                        quantity: cartItem.quantity                            
+                }
+             })
+        },
+        cartTotal(state, getters) {
+            let total = 0
+            getters.cartProducts.forEach(p => {
+                total += p.price * p.quantity
+            })
+            return total
+        }
     },
     actions: { // methods
         // actions decide when muatioan would fire
@@ -54,6 +72,9 @@ const store = new Vuex.Store({
                 }
 
                 context.commit('decrementProductInventory', product)
+            } else {
+                alert("no inventory for " + product.title)
+                 
             }
         }
     },
@@ -75,7 +96,7 @@ const store = new Vuex.Store({
             cartItem.quantity++
         },
         decrementProductInventory(state, product) {
-            product.quantity--
+            product.inventory--
         }
     }
 
