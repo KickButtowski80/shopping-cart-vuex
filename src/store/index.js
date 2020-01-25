@@ -32,7 +32,15 @@ let store = new Vuex.Store({
                 total += p.price * p.quantity
             })
             return total
+        },
+        productIsInStock() {
+            // getters donot accept an argument so we can pass
+            // the argument as function to getters
+            return (product) => {
+                return product.inventory > 0
+            }
         }
+
     },
     actions: { // methods
         // actions decide when muatioan would fire
@@ -61,7 +69,9 @@ let store = new Vuex.Store({
         //     }
         // },
         addProductToCart(context, product) {
-            if (product.inventory > 0) {
+           // if (product.inventory > 0) {
+            // replace it
+            if(context.getters.productIsInStock(product)){
                 // item exist
                 const cartItem = context.state.cart.find(item => item.id === product.id)
                 if (!cartItem) {

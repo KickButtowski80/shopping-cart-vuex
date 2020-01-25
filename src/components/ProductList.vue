@@ -9,7 +9,11 @@
             <li v-for="product in products"
                 v-bind:key = "product.name">
             {{product.title}}  -- {{product.price  | currency}} -- {{product.inventory}}
-            <v-btn color="primary" v-on:click="addProductToCart(product)"> Add To Cart </v-btn>
+            <v-btn 
+            color="primary" 
+            v-on:click="addProductToCart(product)"
+            v-bind:disabled="!productIsInStock(product)"
+            > Add To Cart </v-btn>
             </li>
         </ul>
     
@@ -27,7 +31,11 @@ export default {
     computed:{
         products(){
             // repalce store with this.$store cuz it is global
-            return this.$store.getters.availableProducts
+            // return this.$store.getters.availableProducts
+            return this.$store.state.products
+        },
+        productIsInStock(){
+            return this.$store.getters.productIsInStock
         }
     }, 
 

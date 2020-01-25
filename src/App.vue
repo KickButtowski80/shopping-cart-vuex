@@ -15,7 +15,7 @@
       <v-row> 
         
         <v-col cols="6"><ProductList></ProductList></v-col>
-        <v-col cols="6"><ShoppingCart></ShoppingCart>        </v-col>
+        <v-col cols="6"><ShoppingCart></ShoppingCart></v-col>
       </v-row>
  
     </v-container >
