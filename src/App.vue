@@ -2,14 +2,8 @@
   <v-app>
     <v-container >
       <v-row>
-        <v-col><h1>Cart Total So far: </h1>
-          <v-btn color= "success"
-                >{{cartTotal | currency}}
-          </v-btn>
-          <v-btn  color='warning'                
-          v-on:click="checkout">Checkout
-          </v-btn> 
-          <span>{{this.$store.state.checkoutStatus}}</span>                     
+        <v-col>
+             <checkout-info></checkout-info>       
         </v-col>
       </v-row>
       <v-row> 
@@ -24,28 +18,22 @@
 </template>
 
 <script>
+
 import ProductList from './components/ProductList';
 import ShoppingCart from './components/ShoppingCart'
+import CheckoutButton from './components/CheckoutButton'
 export default {
   name: 'App',
 
   components: {
     ProductList,
-    ShoppingCart
+    ShoppingCart,
+    'checkout-info' : CheckoutButton
   },
 
   data: () => ({
     //
-  }),
-  computed:{
-    
-        cartTotal(){
-            return this.$store.getters.cartTotal
-        },
-          checkout(){ 
-            return this.$store.dispatch('checkout')
-        }
-  }
+  })
 };
 </script>
 

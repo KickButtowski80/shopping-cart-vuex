@@ -12,8 +12,8 @@
             <v-btn 
             color="primary" 
             v-on:click="addProductToCart(product)"
-            v-bind:disabled="!productIsInStock(product)"
-            > Add To Cart </v-btn>
+            v-bind:disabled = "!productIsInStock(product)"
+                      > Add To Cart </v-btn>
             </li>
         </ul>
     
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import {mapState, mapGetters, mapActions} from 'vuex'
 export default {
     data(){
         return{
@@ -28,28 +29,42 @@ export default {
         }
 
     },
+    // computed:{
+    //     products(){
+    //         // repalce store with this.$store cuz it is global
+    //         // return this.$store.getters.availableProducts
+    //         return this.$store.state.products
+    //     },
+    //     productIsInStock(){
+    //         return this.$store.getters.productIsInStock
+    //     }
+    // }, 
     computed:{
-        products(){
-            // repalce store with this.$store cuz it is global
-            // return this.$store.getters.availableProducts
-            return this.$store.state.products
-        },
-        productIsInStock(){
-            return this.$store.getters.productIsInStock
-        }
-    }, 
+        ...mapState({
+            products: state => state.products,
+        }),
+        ...mapGetters({
+            productIsInStock: 'productIsInStock'
+        }),
+     
+    }
 
+    ,
     methods: {
-        addProductToCart(product){
-            this.$store.dispatch('addProductToCart', product)
-        }
+        // addProductToCart(product){
+        //     this.$store.dispatch('addProductToCart', product)
+        // }
+           ...mapActions({
+            fetchProducts: 'fetchProducts',
+            addProductToCart: 'addProductToCart'
+        }),
     },
 
     created(){
         this.loading = true
         // trigger action in store 
           // repalce store with this.$store cuz it is global
-          this.$store.dispatch('fetchProducts')  
+          this.fetchProducts() 
               .then(() => this.loading = false)
     }    
 }

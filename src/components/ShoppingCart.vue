@@ -3,7 +3,7 @@
        <h1> Shopping Cart List</h1>
        <ul>
         
-           <li v-for="cartItem in findProudcts" v-bind:key="cartItem.title">
+           <li v-for="cartItem in products" v-bind:key="cartItem.title">
                <v-card
                 >
                     <v-card-text>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import {mapGetters, mapState} from 'vuex'
 export default {
     methods:{
         // move this to getters with more info
@@ -38,12 +39,18 @@ export default {
         
     },
     computed:{
-        cartItems(){            
-            return this.$store.state.cart
-        },
-        findProudcts(){
-            return this.$store.getters.cartProducts
-        },
+        // cartItems(){            
+        //     return this.$store.state.cart
+        // },
+        // findProudcts(){
+        //     return this.$store.getters.cartProducts
+        // },
+        ...mapState({
+            cartItem: state => state.cart
+        }),
+        ...mapGetters({
+            products: 'cartProducts'
+        })
      
     }
     
